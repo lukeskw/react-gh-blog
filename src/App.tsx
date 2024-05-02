@@ -1,11 +1,11 @@
-import bannerImg from '../src/assets/banner.svg'
-function App() {
+import { BrowserRouter } from 'react-router-dom'
+import { Router } from './Router'
+
+export function App() {
   return (
-    <>
-      <div>
-        <img src={bannerImg} alt="" />
-      </div>
-    </>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   )
 }
 
