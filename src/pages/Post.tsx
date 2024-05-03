@@ -1,7 +1,9 @@
+import { PostHeaderSection } from '../components/PostHeaderSection'
+
 export function Post() {
   return (
-    <div>
-      <h1>Post</h1>
-    </div>
+    <main className="mx-auto my-0 flex max-w-[864px] flex-col gap-8 p-2">
+      <PostHeaderSection />
+    </main>
   )
 }
