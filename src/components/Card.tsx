@@ -1,19 +1,27 @@
-export function Card() {
+import { Post } from '../contexts/BlogContext'
+
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { useBlog } from '../hooks/useBlog'
+dayjs.extend(relativeTime)
+interface ICardProps {
+  post: Post
+}
+
+export function Card({ post }: ICardProps) {
+  const { redirectToPost } = useBlog()
   return (
-    <a href="#" className="flex flex-col gap-4 rounded-xl bg-slate-850 p-10">
-      <div className="flex items-start gap-8">
-        <h1 className="text-xl">JavaScript data types and data structures</h1>
-        <span className="w-24 text-right text-sm text-slate-400">
-          1 day ago
+    <button
+      onClick={() => redirectToPost(post.number)}
+      className="flex flex-col gap-4 rounded-xl bg-slate-850 p-10 hover:bg-slate-800"
+    >
+      <div className="flex items-start justify-between gap-8">
+        <h1 className="text-xl">{post.title}</h1>
+        <span className="w-28 text-right text-sm text-slate-400">
+          {dayjs().to(post.created_at)}
         </span>
       </div>
-      <p className="line-clamp-4 leading-relaxed text-slate-400">
-        Programming languages all have built-in data structures, but these often
-        differ from one language to another. This article attempts to list the
-        built-in data structures available in JavaScript and what properties
-        they have. These can be used to build other data structures. Wherever
-        possible, comparisons with other languages are drawn.
-      </p>
-    </a>
+      <p className="line-clamp-4 leading-relaxed text-slate-400">{post.body}</p>
+    </button>
   )
 }
