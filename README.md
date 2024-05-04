@@ -24,6 +24,8 @@ GitHub Issue Blog is an application that utilizes the GitHub API to fetch issues
 
 <p align="center">
 
+https://github.com/lukeskw/react-gh-blog/assets/49079033/04988e45-ba0e-4d88-be28-8b124969bb02
+
 </p>
 
 ## 🏁 Getting Started <a name = "getting_started_en"></a>
