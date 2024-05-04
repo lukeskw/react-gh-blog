@@ -6,34 +6,20 @@ import {
   CalendarDots,
   CircleNotch,
 } from '@phosphor-icons/react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useBlog } from '../hooks/useBlog'
-import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Post } from '../contexts/BlogContext'
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
 
-export function PostHeaderSection() {
-  const { posts } = useBlog()
+interface IPostHeaderSectionProps {
+  post: Post | undefined
+}
+
+export function PostHeaderSection({ post }: IPostHeaderSectionProps) {
   const navigate = useNavigate()
-  const { postId } = useParams()
-
-  const [post, setPost] = useState<Post>()
-
-  function getPost() {
-    const post = posts?.find((p) => p.number === Number(postId))
-    setPost(post)
-  }
-
-  useEffect(() => {
-    if (posts) {
-      getPost()
-    }
-  }, [posts])
-
-  return posts ? (
+  return post ? (
     <section className="relative -mt-24 flex items-center gap-4 rounded-xl bg-slate-900 p-8 shadow-md shadow-black">
       <div className="flex w-full flex-col justify-between gap-4 px-4 py-2">
         <div className="flex justify-between">
