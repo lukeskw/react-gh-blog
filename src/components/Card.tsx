@@ -13,15 +13,17 @@ export function Card({ post }: ICardProps) {
   return (
     <button
       onClick={() => redirectToPost(post.number)}
-      className="flex flex-col gap-4 rounded-xl bg-slate-850 p-10 hover:bg-slate-800"
+      className="flex flex-col gap-4 rounded-xl bg-slate-850 px-8 py-10 hover:bg-slate-800"
     >
-      <div className="flex items-start justify-between gap-8">
-        <h1 className="text-xl">{post.title}</h1>
-        <span className="w-28 text-right text-sm text-slate-400">
+      <div className="flex items-start justify-between gap-2">
+        <h1 className="w-8/12 text-left text-xl">{post.title}</h1>
+        <span className="w-4/12 text-right text-xs text-slate-400">
           {dayjs().to(post.created_at)}
         </span>
       </div>
-      <p className="line-clamp-4 leading-relaxed text-slate-400">{post.body}</p>
+      <p className="line-clamp-4 w-full text-justify leading-relaxed text-slate-400">
+        {post.body}
+      </p>
     </button>
   )
 }
