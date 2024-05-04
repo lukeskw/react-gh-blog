@@ -89,14 +89,8 @@ export function BlogProvider({ children }: BlogProviderProps) {
     try {
       const response: AxiosResponse<TIssuesResponse> = await api.get(
         `search/issues?q=${q}%20repo:${env.VITE_GITHUB_REPOSITORY}`,
-        {
-          headers: {
-            Authorization: env.VITE_GITHUB_PAT
-              ? `Bearer ${env.VITE_GITHUB_PAT}`
-              : '',
-          },
-        },
       )
+
       const { items } = response.data
       setPosts(items)
     } catch (err) {
