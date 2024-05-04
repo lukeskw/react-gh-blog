@@ -35,6 +35,7 @@ interface BlogContextType {
   user: GithubUser | undefined
   posts: Post[] | undefined
   redirectToPost: (postId: number) => void
+  searchIssue: (q: string) => void
 }
 
 interface BlogProviderProps {
@@ -84,10 +85,17 @@ export function BlogProvider({ children }: BlogProviderProps) {
       navigate('/')
     }
   }
-  async function fetchPosts() {
+  async function fetchPosts(q: string = '') {
     try {
       const response: AxiosResponse<TIssuesResponse> = await api.get(
-        `search/issues?q=repo:${env.VITE_GITHUB_REPOSITORY}`,
+        `search/issues?q=${q}%20repo:${env.VITE_GITHUB_REPOSITORY}`,
+        {
+          headers: {
+            Authorization: env.VITE_GITHUB_PAT
+              ? `Bearer ${env.VITE_GITHUB_PAT}`
+              : '',
+          },
+        },
       )
       const { items } = response.data
       setPosts(items)
@@ -103,6 +111,9 @@ export function BlogProvider({ children }: BlogProviderProps) {
   function redirectToPost(postId: number) {
     navigate(`/posts/${postId}`)
   }
+  function searchIssue(q: string) {
+    fetchPosts(q)
+  }
 
   useEffect(() => {
     fetchUser()
@@ -114,6 +125,7 @@ export function BlogProvider({ children }: BlogProviderProps) {
         posts,
         user,
         redirectToPost,
+        searchIssue,
       }}
     >
       {children}

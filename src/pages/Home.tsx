@@ -1,11 +1,31 @@
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Card } from '../components/Card'
 import { ProfileSection } from '../components/ProfileSection'
 import { useBlog } from '../hooks/useBlog'
 import { CircleNotch } from '@phosphor-icons/react'
+import { useDebounce } from '../hooks/useDebounce'
 
 export function Homepage() {
-  const { user, posts } = useBlog()
+  const { user, posts, searchIssue } = useBlog()
 
+  const [searchInput, setSearchInput] = useState('')
+  const debouncedSearch = useDebounce(searchInput, 500)
+
+  const fetchPosts = async () => {
+    try {
+      searchIssue(debouncedSearch)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchPosts()
+  }, [debouncedSearch])
+
+  function handleSearchInput(event: ChangeEvent<HTMLInputElement>) {
+    setSearchInput(event.target.value)
+  }
   return (
     <main className="mx-auto my-0 flex max-w-[864px] flex-col gap-8 p-2">
       {user && posts ? (
@@ -20,6 +40,8 @@ export function Homepage() {
               type="text"
               className="py- flex-1 rounded-md border border-slate-800 bg-slate-950 px-4 py-2 placeholder:text-zinc-800"
               placeholder="Search content"
+              onChange={handleSearchInput}
+              value={searchInput}
             />
           </div>
 
